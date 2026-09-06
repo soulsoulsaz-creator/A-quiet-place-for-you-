@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050505">
+<title>A Quiet Place for You</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{background:#050505;color:#f7eee9;font-family:Georgia,serif;touch-action:none}
+.screen{position:fixed;inset:0;display:grid;place-items:center;background:#050505;transition:opacity 1.3s ease}
+.heart{position:relative;width:min(60vw,280px);height:180px}
+.half{position:absolute;top:25px;width:50%;height:130px;cursor:grab;transition:transform .35s ease,filter .5s}
+.half:active{cursor:grabbing}.left{left:0}.right{right:0}
+.half svg{width:100%;height:100%}.hint{position:absolute;top:170px;width:100%;text-align:center;color:#756b69;font:11px Arial;letter-spacing:.18em;text-transform:uppercase}
+.reveal,.envelopeScene{position:fixed;inset:0;display:grid;place-items:center;text-align:center;opacity:0;pointer-events:none;transition:opacity 1.4s ease,transform 1.4s ease}
+.reveal{background:radial-gradient(circle,#21151c,#080708 55%,#050505);transform:scale(.98)}
+.show{opacity:1;pointer-events:auto;transform:none}
+.stars{position:absolute;inset:0}.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 4s infinite}
+.content{position:relative;z-index:2;padding:30px}.eyebrow{font:10px Arial;letter-spacing:.35em;text-transform:uppercase;color:#bba3a0;margin-bottom:25px}
+h1{font-size:clamp(40px,10vw,76px);font-weight:400;margin:0 0 22px;line-height:1.02}
+.sub{font-size:clamp(17px,4vw,23px);line-height:1.7;color:#d0c2bd;font-style:italic}
+button{border:1px solid #665456;background:#ffffff08;color:#eadbd6;border-radius:30px;padding:13px 24px;font:11px Arial;letter-spacing:.2em;text-transform:uppercase;cursor:pointer}
+.envelopeScene{background:radial-gradient(circle,#24161d,#080707 60%,#050505);transform:translateY(20px)}
+.envelope{position:relative;width:min(78vw,430px);aspect-ratio:1.45;background:#e7a8b8;border-radius:10px;box-shadow:0 30px 80px #000;cursor:pointer;animation:float 5s ease-in-out infinite}
+.envelope:after{content:"";position:absolute;inset:0;clip-path:polygon(0 0,50% 53%,100% 0,100% 100%,0 100%);background:#d98fa3;border-radius:10px}
+.flap{position:absolute;z-index:3;inset:0 0 auto;height:58%;background:#f0b6c4;clip-path:polygon(0 0,50% 100%,100% 0);transform-origin:top;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.envelope.open .flap{transform:rotateX(180deg)}
+.seal{position:absolute;z-index:4;left:50%;top:52%;transform:translate(-50%,-50%);width:55px;height:55px;border-radius:50%;display:grid;place-items:center;background:#b96981;color:#fff;font-size:23px;transition:.4s}
+.envelope.open .seal{opacity:0}.label{position:absolute;z-index:5;top:56%;left:0;right:0;color:#6d3748;font-size:22px;transition:.4s}.envelope.open .label{opacity:0}
+.note{margin-top:24px;color:#bda9a5;font-style:italic}
+.letter{position:fixed;z-index:10;inset:6% 5%;overflow:auto;background:#f5e9d9;color:#4a3b38;padding:clamp(25px,6vw,55px);box-shadow:0 30px 100px #000;opacity:0;transform:translateY(30px) scale(.97);pointer-events:none;transition:1s}
+.letter.show{opacity:1;transform:none;pointer-events:auto}.letter h2{font-size:42px;font-weight:400}.letter p{font-size:clamp(17px,4.5vw,21px);line-height:1.85}.signature{margin-top:35px;font-style:italic;font-size:20px}
+.close{float:right;border:0;background:none;color:#755c58;font-size:25px;padding:0}
+@keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.8}}@keyframes float{0%,100%{transform:translateY(7px)}50%{transform:translateY(-7px)}}
+</style>
+</head>
+<body>
+<section class="screen" id="entrance">
+  <div class="heart">
+    <div class="half left" id="L"><svg viewBox="0 0 100 100"><path d="M100 100H12C5 84 0 69 0 51 0 22 16 7 37 7c14 0 25 7 32 20 7-13 18-20 31-20V100z" fill="#d96f8c"/></svg></div>
+    <div class="half right" id="R"><svg viewBox="0 0 100 100"><path d="M0 100h88c7-16 12-31 12-49C100 22 84 7 63 7c-14 0-25 7-32 20C24 14 13 7 0 7v93z" fill="#d96f8c"/></svg></div>
+    <div class="hint">put us back together</div>
+  </div>
+</section>
+
+<section class="reveal" id="reveal">
+  <div class="stars" id="stars"></div>
+  <div class="content">
+    <div class="eyebrow">a little place made for you</div>
+    <h1>A Quiet Place for You</h1>
+    <p class="sub">For a moment, forget everything else.<br>Just stay here with me.</p>
+    <button id="inside">come inside</button>
+  </div>
+</section>
+
+<section class="envelopeScene" id="envScene">
+  <div>
+    <div class="envelope" id="env">
+      <div class="flap"></div><div class="seal">♥</div><div class="label">For you ♡</div>
+    </div>
+    <div class="note">There is a little something waiting inside.</div>
+  </div>
+</section>
+
+<article class="letter" id="letter">
+  <button class="close" id="close">×</button>
+  <h2>My love,</h2>
+  <p>This little place is just for you.</p>
+  <p>I wanted to make something small that could remind you that, no matter how far apart we are, there is always a little space in my world that belongs to you.</p>
+  <p>When you miss me, come back here for a while and remember that somewhere, someone is thinking about you, smiling because you exist, and looking forward to all the little moments still waiting for us.</p>
+  <p>You don't have to do anything here. Just stay for a while.</p>
+  <p>Because this is your quiet place.</p>
+  <div class="signature">Always yours,<br>♥</div>
+</article>
+
+<script>
+const L=document.getElementById("L"),R=document.getElementById("R");
+let drag=null,sx=0,sy=0,ox=0,oy=0,done=false;
+function pos(e){return e.touches?e.touches[0]:e}
+function start(el,e){if(done)return;drag=el;const p=pos(e);sx=p.clientX;sy=p.clientY;ox=+(el.dataset.x||0);oy=+(el.dataset.y||0);e.preventDefault()}
+function move(e){if(!drag)return;const p=pos(e),x=ox+p.clientX-sx,y=oy+p.clientY-sy;drag.dataset.x=x;drag.dataset.y=y;drag.style.transform=`translate(${x}px,${y}px)`;check()}
+function stop(){drag=null}
+function check(){
+ const a=L.getBoundingClientRect(),b=R.getBoundingClientRect();
+ const d=Math.hypot((a.left+a.width/2)-(b.left+b.width/2),(a.top+a.height/2)-(b.top+b.height/2));
+ if(d<35){done=true;L.style.transform="translateX(18px)";R.style.transform="translateX(-18px)";
+ setTimeout(()=>{document.getElementById("entrance").style.opacity=0;document.getElementById("reveal").classList.add("show");stars()},500)}
+}
+[L,R].forEach(el=>{el.addEventListener("pointerdown",e=>start(el,e));el.addEventListener("pointermove",move);el.addEventListener("pointerup",stop);el.addEventListener("pointercancel",stop)});
+function stars(){for(let i=0;i<60;i++){let s=document.createElement("i");s.className="star";s.style.left=Math.random()*100+"%";s.style.top=Math.random()*100+"%";s.style.animationDelay=Math.random()*4+"s";document.getElementById("stars").appendChild(s)}}
+document.getElementById("inside").onclick=()=>{document.getElementById("reveal").classList.remove("show");setTimeout(()=>document.getElementById("envScene").classList.add("show"),650)};
+document.getElementById("env").onclick=()=>{const e=document.getElementById("env");e.classList.add("open");setTimeout(()=>document.getElementById("letter").classList.add("show"),850)};
+document.getElementById("close").onclick=()=>document.getElementById("letter").classList.remove("show");
+</script>
+</body>
+</html>
